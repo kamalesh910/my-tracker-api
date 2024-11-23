@@ -1,8 +1,10 @@
 package com.app.my_tracker.controller;
 
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/ping")
-public class UserController {
+public class PingController {
 
     @GetMapping
     public String getPingCall() {
