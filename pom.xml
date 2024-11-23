@@ -11,7 +11,7 @@
 	<groupId>com.app</groupId>
 	<artifactId>my-tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>my-tracker</name>
 	<description>daily routine tracker</description>
 	<url/>
