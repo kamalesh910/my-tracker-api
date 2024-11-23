@@ -1,4 +1,4 @@
-package com.example.tracker.controller;
+package com.app.my_tracker.controller;
 
 import org.springframework.web.bind.annotation.*;
 

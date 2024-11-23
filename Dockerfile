@@ -1,4 +1,4 @@
-# Use Maven to build the project in the container
+# Step 1: Use Maven to build the project
 FROM maven:3.8.4-openjdk-17-slim AS build
 
 # Set the working directory for the build
@@ -8,10 +8,10 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
-# Build the project
+# Run Maven to build the project and create the JAR file
 RUN mvn clean package -DskipTests
 
-# Use a smaller base image to run the app
+# Step 2: Use a smaller base image to run the app
 FROM openjdk:17-jdk-slim
 
 # Set the working directory for the running app

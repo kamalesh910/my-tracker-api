@@ -3,6 +3,6 @@ services:
     name: tracker-service
     env: docker
     plan: free
-    buildCommand: "mvn clean package"  # Build command for the Java app
-    healthCheckPath: "/actuator/health"
+    buildCommand: "mvn clean package"  # This will build the app in Render
+    healthCheckPath: "/actuator/health"  # Adjust if necessary for health check
     autoDeploy: true
