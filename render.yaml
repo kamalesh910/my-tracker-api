@@ -4,5 +4,5 @@ services:
     env: docker
     plan: free
     buildCommand: "mvn clean package"  # This will build the app in Render
-    healthCheckPath: "/actuator/health"  # Adjust if necessary for health check
+    healthCheckPath: "/ping"  # Adjust if necessary for health check
     autoDeploy: true
