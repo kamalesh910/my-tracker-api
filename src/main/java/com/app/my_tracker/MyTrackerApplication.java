@@ -8,7 +8,7 @@ public class MyTrackerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyTrackerApplication.class, args);
-		System.out.println("Application started up and running")
+		System.out.println("Application started up and running");
 	}
 
 }
