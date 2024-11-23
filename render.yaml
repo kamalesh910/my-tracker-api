@@ -3,7 +3,6 @@ services:
     name: tracker-service
     env: docker
     plan: free
-    buildCommand: "mvn clean package"  # This will run the Maven build first
-    startCommand: "java -jar target/tracker-0.0.1-SNAPSHOT.jar"
+    buildCommand: "mvn clean package"  # Build command for the Java app
     healthCheckPath: "/actuator/health"
     autoDeploy: true
