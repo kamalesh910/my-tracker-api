@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.app</groupId>
-	<artifactId>my-tracker</artifactId>
+	<artifactId>my-tracker-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>my-tracker</name>
+	<name>my-tracker-api</name>
 	<description>daily routine tracker</description>
 	<url/>
 	<licenses>
