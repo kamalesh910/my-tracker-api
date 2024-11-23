@@ -10,8 +10,6 @@ import java.util.List;
 public class UserController {
 
     private static List<String> userEntries = new ArrayList<>();
-    userEntries.add("kamalesh");
-    userEntries.add("rushi");
 
     // Endpoint to fetch all user entries
     @GetMapping
