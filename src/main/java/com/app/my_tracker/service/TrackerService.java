@@ -22,7 +22,7 @@ public class TrackerService {
     private List<User> users;
 
     public TrackerService() {
-        loadData();
+       
     }
 
 private void loadData() {
@@ -63,6 +63,7 @@ private void loadData() {
 
 
     public Optional<User> validateUser(String username, String password) {
+         loadData();
         return users.stream()
                 .filter(user -> user.getUsername().equals(username) && user.getPassword().equals(password))
                 .findFirst();
