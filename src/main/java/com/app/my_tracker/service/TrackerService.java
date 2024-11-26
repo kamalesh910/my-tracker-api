@@ -51,7 +51,7 @@ public class TrackerService {
                 .findFirst();
     }
 
-    public List<TrackData> getTrackData(int userId) {
+    public List<TrackData> getTrackData(String userId) {
                  getAllUsers();
         return users.stream()
                 .filter(user -> user.getId() == userId)
