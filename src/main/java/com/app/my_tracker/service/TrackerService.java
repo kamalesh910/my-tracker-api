@@ -3,17 +3,21 @@ package com.app.my_tracker.service;
 import com.app.my_tracker.model.TrackData;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
+
 
 @Service
 public class TrackerService {
 
     private final String DATA_FILE = "src/main/resources/data/tracker-data.json";
+
+   // private static final String DATA_FILE = "tracker-data.json";
     private List<User> users;
 
     public TrackerService() {
@@ -21,18 +25,19 @@ public class TrackerService {
     }
 
     private void loadData() {
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            users = mapper.readValue(new File(DATA_FILE), new TypeReference<>() {});
+            ObjectMapper objectMapper = new ObjectMapper();
+            users = objectMapper.readValue(new File(DATA_FILE), new TypeReference<>() {});
         } catch (IOException e) {
-            users = List.of();
+            users = new ArrayList<>();
+            e.printStackTrace();
         }
     }
 
     private void saveData() {
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new File(DATA_FILE), users);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(new File(DATA_FILE), users);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +54,7 @@ public class TrackerService {
                 .filter(user -> user.getId() == userId)
                 .findFirst()
                 .map(User::getTrackData)
-                .orElse(List.of());
+                .orElse(new ArrayList<>());
     }
 
     public void addTrackData(int userId, TrackData newTrackData) {
@@ -57,9 +62,24 @@ public class TrackerService {
                 .filter(user -> user.getId() == userId)
                 .findFirst()
                 .ifPresent(user -> {
-                    newTrackData.setId(user.getTrackData().size() + 1);
-                    user.getTrackData().add(newTrackData);
+                    user.addTrackData(newTrackData);
                     saveData();
                 });
+    }
+
+    public boolean addNewUser(User newUser) {
+        boolean usernameExists = users.stream()
+                .anyMatch(user -> user.getUsername().equals(newUser.getUsername()));
+
+        if (usernameExists) {
+            return false; // Username already exists
+        }
+
+        // Generate a new unique ID for the user
+        int newId = users.stream().mapToInt(User::getId).max().orElse(0) + 1;
+        newUser.setId(newId);
+        users.add(newUser);
+        saveData();
+        return true;
     }
 }
