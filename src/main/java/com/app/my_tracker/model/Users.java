@@ -21,7 +21,7 @@ public class Users {
         this.trackData = new ArrayList<>();
     }
 
-    public Users(int id, String name, String username, String password) {
+    public Users(String id, String name, String username, String password) {
         this.id = id;
         this.name = name;
         this.username = username;

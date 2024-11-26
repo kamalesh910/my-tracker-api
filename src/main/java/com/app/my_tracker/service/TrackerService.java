@@ -73,10 +73,6 @@ public class TrackerService {
         if (usernameExists) {
             return false; // Username already exists
         }
-
-        // Generate a new unique ID for the user
-        int newId = users.stream().mapToInt(User::getId).max().orElse(0) + 1;
-        newUser.setId(newId);
         users.add(newUser);
         userRepository.save(newUser);
         return true;
