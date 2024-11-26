@@ -1,6 +1,6 @@
 package com.app.my_tracker.controller;
 
-import com.app.my_tracker.model.User;
+import com.app.my_tracker.model.Users;
 import com.app.my_tracker.service.TrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class LoginController {
      * @return A success or failure message.
      */
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
+    public String register(@RequestBody Users user) {
         boolean success = trackerService.addNewUser(user);
         return success ? "User registered successfully!" : "Registration failed: Username already exists.";
     }
