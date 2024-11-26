@@ -19,56 +19,38 @@ public class TrackerService {
     @Value("${tracker.data.file}")
     private String dataFilePath;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private List<User> users;
 
-    public TrackerService() {
-       System.out.println("Current Working Directory: ");
+
+    // Create a new user or update an existing user
+    public User createUser(User user) {
+        return userRepository.save(user);
     }
 
-private void loadData() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File(dataFilePath);
-            if (file.exists()) {
-                // Load from the external file
-                users = objectMapper.readValue(new FileInputStream(file), new TypeReference<>() {});
-                System.out.println("Data loaded from external file: " + file.getAbsolutePath());
-            } else {
-                // Initialize with an empty list if the file is missing
-                users = new ArrayList<>();
-                System.out.println("No external data file found. Starting with an empty user list file : "+file.getAbsolutePath());
-            }
-        } catch (IOException e) {
-            users = new ArrayList<>();
-            e.printStackTrace();
-        }
+    // Fetch user by name
+    public User getUserByName(String name) {
+        return userRepository.findByName(name);
     }
 
-    private void saveData() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File(dataFilePath);
-
-            // Ensure the parent directories exist
-            file.getParentFile().mkdirs();
-
-            // Write data to the external file
-            objectMapper.writeValue(file, users);
-            System.out.println("Data saved to external file: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // Fetch all users
+    public List<User> getAllUsers() {
+        this.users =  userRepository.findAll();
+        return userRepository.findAll();
     }
 
 
     public Optional<User> validateUser(String username, String password) {
-         loadData();
+         getAllUsers();
         return users.stream()
                 .filter(user -> user.getUsername().equals(username) && user.getPassword().equals(password))
                 .findFirst();
     }
 
     public List<TrackData> getTrackData(int userId) {
+                 getAllUsers();
         return users.stream()
                 .filter(user -> user.getId() == userId)
                 .findFirst()
@@ -77,13 +59,9 @@ private void loadData() {
     }
 
     public void addTrackData(int userId, TrackData newTrackData) {
-        users.stream()
-                .filter(user -> user.getId() == userId)
-                .findFirst()
-                .ifPresent(user -> {
-                    user.addTrackData(newTrackData);
-                    saveData();
-                });
+      User user = getUserByName(userId);
+      user.addTrackData(newTrackData);
+      userRepository.save(newUser);
     }
 
     public boolean addNewUser(User newUser) {
@@ -98,7 +76,7 @@ private void loadData() {
         int newId = users.stream().mapToInt(User::getId).max().orElse(0) + 1;
         newUser.setId(newId);
         users.add(newUser);
-        saveData();
+        userRepository.save(newUser);
         return true;
     }
 }
