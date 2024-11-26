@@ -1,6 +1,6 @@
 package com.app.my_tracker.service;
 
-import com.app.my_tracker.model.TrackData;
+import com.app.my_tracker.model.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
