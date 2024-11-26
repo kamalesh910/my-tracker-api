@@ -22,14 +22,14 @@ public class TrackerService {
     private List<User> users;
 
     public TrackerService() {
-       
+       System.out.println("Current Working Directory: " + new File(".").getAbsolutePath());
     }
 
 private void loadData() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             File file = new File(dataFilePath);
-     System.out.println("Data loaded from external file: ");
+     System.out.println("Data loaded from external file: "+file.getAbsolutePath());
             if (file.exists()) {
                 // Load from the external file
                 users = objectMapper.readValue(new FileInputStream(file), new TypeReference<>() {});
