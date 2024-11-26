@@ -56,7 +56,7 @@ public class TrackerService {
         return users.stream()
                 .filter(user -> user.getId() == userId)
                 .findFirst()
-                .map(User::getTrackData)
+                .map(Users::getTrackData)
                 .orElse(new ArrayList<>());
     }
 
