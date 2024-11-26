@@ -2,46 +2,90 @@ package com.example.tracker.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
+import java.util.List;
+import java.util.Map;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class FileController {
 
-    // Endpoint to list files/folders at the root level
-    @GetMapping("/list-files/{path}")
-    public List<String> listFiles(@PathVariable String path) {
-        // Define the directory path (use absolute or relative path)
-        File directory = new File("/app/data");  // Change the path if needed
+   @Autowired
+    private MongoTemplate mongoTemplate;
 
-        // Log the absolute path for debugging purposes
-        System.out.println("Looking for files in directory: " + directory.getAbsolutePath());
+    // Endpoint to list all collections
+    @GetMapping("/collections")
+    public ResponseEntity<List<String>> getCollections() {
+        List<String> collections = mongoTemplate.getCollectionNames();
+        return ResponseEntity.ok(collections);
+    }
 
-        // List to hold file/folder names
-        List<String> fileList = new ArrayList<>();
+    // Endpoint to get all documents from a specific collection
+    @GetMapping("/collection/{collectionName}")
+    public ResponseEntity<List<Object>> getAllDocuments(@PathVariable String collectionName) {
+        List<Object> documents = mongoTemplate.findAll(Object.class, collectionName);
+        return ResponseEntity.ok(documents);
+    }
 
-        // Check if the directory exists
-        if (directory.exists() && directory.isDirectory()) {
-            // Log the directory contents
-            System.out.println("Directory exists. Listing contents...");
+    // Endpoint to query a collection with criteria
+    @PostMapping("/query/{collectionName}")
+    public ResponseEntity<List<Object>> queryCollection(
+            @PathVariable String collectionName,
+            @RequestBody Map<String, Object> criteriaMap) {
 
-            // Get all files and folders in the directory
-            String[] files = directory.list();
-            if (files != null) {
-                // Add each file/folder to the list
-                for (String fileName : files) {
-                    fileList.add(fileName);
-                    // Log each file found
-                    System.out.println("Found file/folder: " + fileName);
-                }
-            }
-        } else {
-            System.out.println("Directory does not exist or is not a directory.");
+        Query query = new Query();
+        for (Map.Entry<String, Object> entry : criteriaMap.entrySet()) {
+            query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
         }
 
-        // Return the list of files/folders
-        return fileList;
+        List<Object> results = mongoTemplate.find(query, Object.class, collectionName);
+        return ResponseEntity.ok(results);
+    }
+
+    // Endpoint to insert a document into a collection
+    @PostMapping("/collection/{collectionName}")
+    public ResponseEntity<String> addDocument(
+            @PathVariable String collectionName,
+            @RequestBody Map<String, Object> document) {
+
+        mongoTemplate.insert(document, collectionName);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Document inserted successfully");
+    }
+
+    // Endpoint to update a document in a collection
+    @PutMapping("/collection/{collectionName}")
+    public ResponseEntity<String> updateDocument(
+            @PathVariable String collectionName,
+            @RequestParam String fieldName,
+            @RequestParam String fieldValue,
+            @RequestBody Map<String, Object> updates) {
+
+        Query query = new Query(Criteria.where(fieldName).is(fieldValue));
+        Update update = new Update();
+        updates.forEach(update::set);
+
+        mongoTemplate.updateFirst(query, update, collectionName);
+        return ResponseEntity.ok("Document updated successfully");
+    }
+
+    // Endpoint to delete a document from a collection
+    @DeleteMapping("/collection/{collectionName}")
+    public ResponseEntity<String> deleteDocument(
+            @PathVariable String collectionName,
+            @RequestParam String fieldName,
+            @RequestParam String fieldValue) {
+
+        Query query = new Query(Criteria.where(fieldName).is(fieldValue));
+        mongoTemplate.remove(query, collectionName);
+        return ResponseEntity.ok("Document deleted successfully");
     }
 }
