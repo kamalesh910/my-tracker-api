@@ -1,7 +1,5 @@
-package com.example.tracker.controller;
+package com.app.my_tracker.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,21 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-import java.util.Map;
-import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 
 @RestController
+@RequestMapping("/api/mongo")
 public class FileController {
 
-   @Autowired
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     // Endpoint to list all collections
     @GetMapping("/collections")
     public ResponseEntity<List<String>> getCollections() {
-        List<String> collections = mongoTemplate.getCollectionNames();
+        Set<String> collections = new ArrayList<>(mongoTemplate.getCollectionNames());
         return ResponseEntity.ok(collections);
     }
 
