@@ -4,6 +4,7 @@ import com.app.my_tracker.model.*;
 import com.app.my_tracker.repository.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import java.io.File;
 import java.io.FileInputStream;
