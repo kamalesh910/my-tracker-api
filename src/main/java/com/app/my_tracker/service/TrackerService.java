@@ -60,7 +60,7 @@ public class TrackerService {
                 .orElse(new ArrayList<>());
     }
 
-    public void addTrackData(int userId, TrackData newTrackData) {
+    public void addTrackData(String userId, TrackData newTrackData) {
       User user = userRepository.findById(userId).get();
       user.addTrackData(newTrackData);
       userRepository.save(user);

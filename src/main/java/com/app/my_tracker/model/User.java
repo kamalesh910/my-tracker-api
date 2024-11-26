@@ -11,7 +11,7 @@ import java.util.List;
 @Document(collection = "users")
 public class User {
     @Id
-    private int id;
+    private String id;
     private String name;
     private String username;
     private String password;

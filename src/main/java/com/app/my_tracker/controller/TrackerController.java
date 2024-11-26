@@ -21,7 +21,7 @@ public class TrackerController {
      * @return A list of track data for the user.
      */
     @GetMapping("/trackData/{userId}")
-    public List<TrackData> getTrackData(@PathVariable int userId) {
+    public List<TrackData> getTrackData(@PathVariable String userId) {
         return trackerService.getTrackData(userId);
     }
 
@@ -32,7 +32,7 @@ public class TrackerController {
      * @param newTrackData The new track data to be added.
      */
     @PostMapping("/trackData/{userId}")
-    public void addTrackData(@PathVariable int userId, @RequestBody TrackData newTrackData) {
+    public void addTrackData(@PathVariable String userId, @RequestBody TrackData newTrackData) {
         trackerService.addTrackData(userId, newTrackData);
     }
 }
