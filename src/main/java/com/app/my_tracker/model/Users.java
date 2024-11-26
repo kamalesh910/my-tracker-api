@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document(collection = "users")
-public class User {
+public class Users {
     @Id
     private String id;
     private String name;
@@ -17,11 +17,11 @@ public class User {
     private String password;
     private List<TrackData> trackData;
 
-    public User() {
+    public Users() {
         this.trackData = new ArrayList<>();
     }
 
-    public User(int id, String name, String username, String password) {
+    public Users(int id, String name, String username, String password) {
         this.id = id;
         this.name = name;
         this.username = username;

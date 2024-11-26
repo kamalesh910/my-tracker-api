@@ -24,11 +24,11 @@ public class TrackerService {
     @Autowired
     private UserRepository userRepository;
 
-    private List<User> users;
+    private List<Users> users;
 
 
     // Create a new user or update an existing user
-    public User createUser(User user) {
+    public User createUser(Users user) {
         return userRepository.save(user);
     }
 
@@ -44,7 +44,7 @@ public class TrackerService {
     }
 
 
-    public Optional<User> validateUser(String username, String password) {
+    public Optional<Users> validateUser(String username, String password) {
          getAllUsers();
         return users.stream()
                 .filter(user -> user.getUsername().equals(username) && user.getPassword().equals(password))
@@ -61,12 +61,12 @@ public class TrackerService {
     }
 
     public void addTrackData(String userId, TrackData newTrackData) {
-      User user = userRepository.findById(userId).get();
+      Users user = userRepository.findById(userId).get();
       user.addTrackData(newTrackData);
       userRepository.save(user);
     }
 
-    public boolean addNewUser(User newUser) {
+    public boolean addNewUser(Users newUser) {
         boolean usernameExists = users.stream()
                 .anyMatch(user -> user.getUsername().equals(newUser.getUsername()));
 
