@@ -29,7 +29,7 @@ private void loadData() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             File file = new File(dataFilePath);
-
+     System.out.println("Data loaded from external file: ");
             if (file.exists()) {
                 // Load from the external file
                 users = objectMapper.readValue(new FileInputStream(file), new TypeReference<>() {});
