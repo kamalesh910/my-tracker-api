@@ -61,7 +61,7 @@ public class TrackerService {
     }
 
     public void addTrackData(int userId, TrackData newTrackData) {
-      User user = getUserByName(userId);
+      User user = userRepository.findById(userId);
       user.addTrackData(newTrackData);
       userRepository.save(user);
     }
