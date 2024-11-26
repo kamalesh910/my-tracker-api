@@ -14,6 +14,13 @@ public class LoginController {
     @Autowired
     private TrackerService trackerService;
 
+    /**
+     * Validates user login and returns the user ID on success.
+     *
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @return User ID if login is successful, or "Invalid credentials".
+     */
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
         return trackerService.validateUser(username, password)
@@ -21,13 +28,15 @@ public class LoginController {
                 .orElse("Invalid credentials");
     }
 
-    @GetMapping("/trackData/{userId}")
-    public List<TrackData> getTrackData(@PathVariable int userId) {
-        return trackerService.getTrackData(userId);
-    }
-
-    @PostMapping("/trackData/{userId}")
-    public void addTrackData(@PathVariable int userId, @RequestBody TrackData newTrackData) {
-        trackerService.addTrackData(userId, newTrackData);
+    /**
+     * Registers a new user.
+     *
+     * @param user The user to register.
+     * @return A success or failure message.
+     */
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
+        boolean success = trackerService.addNewUser(user);
+        return success ? "User registered successfully!" : "Registration failed: Username already exists.";
     }
 }

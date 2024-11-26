@@ -15,32 +15,6 @@ public class TrackerController {
     private TrackerService trackerService;
 
     /**
-     * Validates user login and returns the user ID on success.
-     *
-     * @param username The username of the user.
-     * @param password The password of the user.
-     * @return User ID if login is successful, or "Invalid credentials".
-     */
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        return trackerService.validateUser(username, password)
-                .map(user -> String.valueOf(user.getId()))
-                .orElse("Invalid credentials");
-    }
-
-    /**
-     * Registers a new user.
-     *
-     * @param user The user to register.
-     * @return A success or failure message.
-     */
-    @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        boolean success = trackerService.addNewUser(user);
-        return success ? "User registered successfully!" : "Registration failed: Username already exists.";
-    }
-
-    /**
      * Retrieves track data for a specific user.
      *
      * @param userId The ID of the user.
