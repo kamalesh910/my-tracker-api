@@ -22,7 +22,7 @@ public class TrackerService {
     private List<User> users;
 
     public TrackerService() {
-       System.out.println("Current Working Directory: " + new File(dataFilePath).exists());
+       System.out.println("Current Working Directory: ");
     }
 
 private void loadData() {
