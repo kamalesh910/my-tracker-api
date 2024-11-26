@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.query.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class TrackerService {
 
     // Fetch user by name
     public Users getUserByName(String name) {
-        return userRepository.findByName(name);
+        return userRepository.findByUsername(name);
     }
 
     // Fetch all users
@@ -44,12 +45,13 @@ public class TrackerService {
     }
 
 
-    public Optional<Users> validateUser(String username, String password) {
-         getAllUsers();
-        return users.stream()
-                .filter(user -> user.getUsername().equals(username) && user.getPassword().equals(password))
-                .findFirst();
-    }
+public Optional<Users> validateUser(String username, String password) {
+    Query query = new Query();
+    query.addCriteria(Criteria.where("name").is(username).and("password").is(password));
+    Users user = mongoTemplate.findOne(query, Users.class);
+    return Optional.ofNullable(user);
+}
+
 
     public List<TrackData> getTrackData(String userId) {
                  getAllUsers();

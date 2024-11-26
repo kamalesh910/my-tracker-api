@@ -25,7 +25,7 @@ public class LoginController {
     public String login(@RequestParam String username, @RequestParam String password) {
         return trackerService.validateUser(username, password)
                 .map(user -> String.valueOf(user.getId()))
-                .orElse("Invalid credentials");
+                .orElse("Invalid credentials ");
     }
 
     /**
