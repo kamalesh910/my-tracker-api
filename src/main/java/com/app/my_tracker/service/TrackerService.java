@@ -15,9 +15,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TrackerService {
 
-    private final String DATA_FILE = "src/main/resources/data/tracker-data.json";
-
-   // private static final String DATA_FILE = "tracker-data.json";
     private List<User> users;
 
     public TrackerService() {
@@ -27,7 +24,9 @@ public class TrackerService {
     private void loadData() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            users = objectMapper.readValue(new File(DATA_FILE), new TypeReference<>() {});
+            File file = new File(getClass().getClassLoader().getResource("data/tracker-data.json").getFile());
+     
+            users = objectMapper.readValue(file, new TypeReference<>() {});
         } catch (IOException e) {
             users = new ArrayList<>();
             e.printStackTrace();
@@ -37,7 +36,8 @@ public class TrackerService {
     private void saveData() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(new File(DATA_FILE), users);
+             File file = new File(getClass().getClassLoader().getResource("data/tracker-data.json").getFile());
+            objectMapper.writeValue(file, users);
         } catch (IOException e) {
             e.printStackTrace();
         }
