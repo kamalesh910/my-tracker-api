@@ -63,7 +63,7 @@ public class TrackerService {
     public void addTrackData(int userId, TrackData newTrackData) {
       User user = getUserByName(userId);
       user.addTrackData(newTrackData);
-      userRepository.save(newUser);
+      userRepository.save(user);
     }
 
     public boolean addNewUser(User newUser) {
