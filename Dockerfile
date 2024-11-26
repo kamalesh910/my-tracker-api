@@ -17,6 +17,7 @@ FROM openjdk:17-jdk-slim
 
 # Set the working directory for the running app
 WORKDIR /app
+COPY data /app/data
 
 # Copy the JAR file from the build container
 COPY --from=build /app/target/my-tracker-api-0.0.1-SNAPSHOT.jar app.jar
