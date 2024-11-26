@@ -29,7 +29,6 @@ private void loadData() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             File file = new File(dataFilePath);
-            System.out.println("Data loaded from external file: "+file.getAbsolutePath());
             if (file.exists()) {
                 // Load from the external file
                 users = objectMapper.readValue(new FileInputStream(file), new TypeReference<>() {});
@@ -37,7 +36,7 @@ private void loadData() {
             } else {
                 // Initialize with an empty list if the file is missing
                 users = new ArrayList<>();
-                System.out.println("No external data file found. Starting with an empty user list.");
+                System.out.println("No external data file found. Starting with an empty user list file : "+file.getAbsolutePath());
             }
         } catch (IOException e) {
             users = new ArrayList<>();
