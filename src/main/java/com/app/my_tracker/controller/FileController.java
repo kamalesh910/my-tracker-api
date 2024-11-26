@@ -20,8 +20,8 @@ public class FileController {
 
     // Endpoint to list all collections
     @GetMapping("/collections")
-    public ResponseEntity<List<String>> getCollections() {
-        Set<String> collections = new ArrayList<>(mongoTemplate.getCollectionNames());
+    public ResponseEntity<Set<String>> getCollections() {
+        Set<String> collections = new HashSet<>(mongoTemplate.getCollectionNames());
         return ResponseEntity.ok(collections);
     }
 
