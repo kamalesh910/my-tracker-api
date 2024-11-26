@@ -64,9 +64,10 @@
     	<version>2.15.2</version> <!-- Use the latest stable version -->
 	</dependency>
 
-	  <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver-sync</artifactId>
+        <version>5.2.0</version>
     </dependency>
 
     <dependency>
