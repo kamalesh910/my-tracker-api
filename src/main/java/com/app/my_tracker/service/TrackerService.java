@@ -28,17 +28,17 @@ public class TrackerService {
 
 
     // Create a new user or update an existing user
-    public User createUser(Users user) {
+    public Users createUser(Users user) {
         return userRepository.save(user);
     }
 
     // Fetch user by name
-    public User getUserByName(String name) {
+    public Users getUserByName(String name) {
         return userRepository.findByName(name);
     }
 
     // Fetch all users
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         this.users =  userRepository.findAll();
         return userRepository.findAll();
     }
