@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "name": "User 1",
+        "username": "kdhage910",
+        "password": "kdhage910",
+        "trackData": [
+            {
+                "id": 1,
+                "date": "2024-11-26",
+                "category": "Diet",
+                "score": 5,
+                "description": "Ate a healthy breakfast"
+            },
+            {
+                "id": 2,
+                "date": "2024-11-25",
+                "category": "Exercise",
+                "score": 8,
+                "description": "Went for a morning jog"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "User 2",
+        "username": "user2",
+        "password": "password456",
+        "trackData": []
+    }
+]
