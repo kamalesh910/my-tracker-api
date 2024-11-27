@@ -2,6 +2,8 @@ package com.app.my_tracker.service;
 
 import com.app.my_tracker.model.*;
 import com.app.my_tracker.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ public class TrackerService {
 
     @Autowired
     private UserRepository userRepository;
+
+    
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private List<Users> users;
 
