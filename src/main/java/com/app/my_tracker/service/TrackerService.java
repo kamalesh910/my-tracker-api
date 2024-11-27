@@ -60,12 +60,20 @@ public Optional<Users> validateUser(String username, String password) {
 
 
     public List<TrackData> getTrackData(String userId) {
-                 getAllUsers();
-        return users.stream()
-                .filter(user -> user.getId() == userId)
-                .findFirst()
-                .map(Users::getTrackData)
-                .orElse(new ArrayList<>());
+    try {
+        // Query to find the user by their ID
+        Query query = new Query(Criteria.where("id").is(userId));
+        Users user = mongoTemplate.findOne(query, Users.class);
+
+        if (user != null) {
+            // Return the user's trackData
+            return user.getTrackData();
+        } else {
+            return Collections.emptyList();
+        }
+    } catch (Exception e) {
+        throw new RuntimeException("Error retrieving track data", e);
+    }
     }
 
     public void addTrackData(String userId, TrackData newTrackData) {
